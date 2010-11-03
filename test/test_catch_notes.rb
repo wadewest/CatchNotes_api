@@ -1,13 +1,32 @@
 require 'helper'
+require 'note_class'
 
 class TestCatchNotes < Test::Unit::TestCase
   
   should "have valid login info" do
-    assert_instance_of Hash, catch_info
-    assert_not_nil catch_info[:username], "Need a username to connect"
-    assert_not_nil catch_info[:password], "Need a password to connect"
-    assert_not_equal '', catch_info[:username], "Need a username to connect"
-    assert_not_equal '', catch_info[:password], "Need a password to connect"
+    assert_instance_of Class, NoteClass
+    assert NoteClass.valid_username?, "Need a username to connect"
+    assert NoteClass.valid_password?, "Need a password to connect"
+  end
+  
+  should "be able to get all notes as an array of notes" do
+    notes = NoteClass.all
+    assert_instance_of Array, notes
+    assert_instance_of NoteClass, notes.first
+  end
+  
+  should "be able to get the first note" do
+    assert_instance_of NoteClass, NoteClass.first
+  end
+  
+  should "be able to get the last note" do
+    assert_instance_of NoteClass, NoteClass.last
+  end
+  
+  should "be able to a note by its id" do
+    note_id = NoteClass.first.id
+    note = NoteClass.find note_id
+    assert_instance_of NoteClass, note
   end
   
 end
