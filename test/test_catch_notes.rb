@@ -23,10 +23,15 @@ class TestCatchNotes < Test::Unit::TestCase
     assert_instance_of NoteClass, NoteClass.last
   end
   
-  should "be able to a note by its id" do
+  should "be able to find a note by its id" do
     note_id = NoteClass.first.id
     note = NoteClass.find note_id
     assert_instance_of NoteClass, note
+  end
+  
+  should "be able to create and save a new note" do
+    note = NoteClass.new :text=> 'This is a new note.'
+    assert note.save
   end
   
 end

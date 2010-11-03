@@ -49,7 +49,7 @@ module CatchNotes
           res = get "/notes"
           if res.code == 200
             JSON.parse(res.body)['notes'].map do |note|
-              send :new, note
+              send :build_from_hash, note
             end
           end
         end
@@ -57,7 +57,7 @@ module CatchNotes
         def find(id)
           res = get "/notes/#{id}"
           if res.code == 200
-            send :new, JSON.parse(res.body)['notes'].first
+            send :build_from_hash, JSON.parse(res.body)['notes'].first
           end
         end
     
@@ -75,42 +75,91 @@ module CatchNotes
       end
     end
     
-    def self.stringigy_keys (input_hash)
-      input_hash.map{|k,v| [k.to_s, v]}.inject({}) do |hash, pair|
-        hash[pair.first] = pair.last
-        hash
+    module CRUDMethods
+      
+      module ClassMethods
+        private
+        def build_from_hash(hash)
+          send :new, hash
+        end
       end
-    end
-    
-    def initialize(attributes)
-      @attr = self.class.stringigy_keys attributes
-      @id = @attr['id']
-      @created_at = @attr['created_at']
-      @modified_at = @attr['modified_at']
-      @source = @attr['source']
-      @source_url = @attr['source_url']
-      @children = @attr['children']
-      @text = @attr['text']
-      @summary = @attr['summary']
-      @tags = @attr['tags']
-      @reminder_at = @attr['reminder_at']
-      @location = @attr['location']
-      unless @attr['user'].nil?
-        @user_name = @attr['user']['user_name']
-        @user_id = @attr['user']['id']
+      
+      def self.included(klass)
+        klass.extend ClassMethods
       end
-    end
+      
+      def initialize(attributes)
+        @attr = self.class.send :stringify_keys, attributes
+        @id = @attr['id']
+        @created_at = @attr['created_at']
+        @modified_at = @attr['modified_at']
+        @source = @attr['source']
+        @source_url = @attr['source_url']
+        @children = @attr['children']
+        @text = @attr['text']
+        @summary = @attr['summary']
+        @tags = @attr['tags']
+        @reminder_at = @attr['reminder_at']
+        @location = @attr['location']
+        unless @attr['user'].nil?
+          @user_name = @attr['user']['user_name']
+          @user_id = @attr['user']['id']
+        end
+      end
     
-    def save
-      false
-    end
+      def save
+        if new_record?
+          res = self.class.send :post, "/notes", :body => post_body
+          rebuild JSON.parse(res.body)['notes'].first
+          return true
+        else
+          false
+        end
+      end
     
-    def destroy
-      false
+      def destroy
+        false
+      end
+      
+      private
+      def post_body
+        {
+          'text' => send(:text)
+        }.map{|k,v| "#{URI.encode(k)}=#{URI.encode(v)}"}.join("&")
+      end
+      
+      def rebuild(attrs)
+        initialize(attrs)
+      end
+      
+    end
+
+    module Util
+      
+      module ClassMethods
+        def stringify_keys (input_hash)
+          input_hash.map{|k,v| [k.to_s, v]}.inject({}) do |hash, pair|
+            hash[pair.first] = pair.last
+            hash
+          end
+        end
+      end
+      
+      def new_record?
+        i = self.send :id
+        i.nil?
+      end
+      
+      def self.included(klass)
+        klass.extend ClassMethods
+      end
+      
     end
     
     include AuthItems
     include FinderMethods
+    include CRUDMethods
+    include Util
     
   end
 end
