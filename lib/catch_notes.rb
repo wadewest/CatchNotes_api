@@ -1,4 +1,4 @@
 require 'catch_notes/base'
-class CatchNotes
+module CatchNotes
   
 end
