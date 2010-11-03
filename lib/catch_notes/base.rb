@@ -8,7 +8,7 @@ module CatchNotes
     attr_accessor :text, :summary, :tags, :reminder_at, :location
     
     include HTTParty
-    base_uri "http://api.catch.com/v1"
+    base_uri "https://api.catch.com/v1"
     
     # Methods for Authenication
     module AuthItems
