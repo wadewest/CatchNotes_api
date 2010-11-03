@@ -7,4 +7,9 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'CatchNotes'
 
 class Test::Unit::TestCase
+  
+  def catch_info
+    @@catch_info ||= {:username=>'foo@example.com', :password=>'foobar'}
+  end
+  
 end
