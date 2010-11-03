@@ -10,6 +10,9 @@ begin
     gem.email = "wwest81@gmail.com"
     gem.homepage = "http://github.com/eod_81@yahoo.com/CatchNotes_api"
     gem.authors = ["Wade West"]
+    
+    gem.add_dependency 'httparty', '>=0.6.1'
+    
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
