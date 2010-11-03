@@ -1,6 +1,6 @@
 require 'helper'
 
-class TestCatchnotes < Test::Unit::TestCase
+class TestCatchNotes < Test::Unit::TestCase
   
   should "have valid login info" do
     assert_instance_of Hash, catch_info
