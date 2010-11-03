@@ -8,7 +8,7 @@ begin
     gem.summary = %Q{TODO: one-line summary of your gem}
     gem.description = %Q{TODO: longer description of your gem}
     gem.email = "wwest81@gmail.com"
-    gem.homepage = "http://github.com/eod_81@yahoo.com/CatchNotes_api"
+    gem.homepage = "http://github.com/wadewest/CatchNotes_api"
     gem.authors = ["Wade West"]
     
     gem.add_dependency 'httparty', '>=0.6.1'
