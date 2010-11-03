@@ -9,6 +9,8 @@
 	notes = Note.all	# returns an array of Note objects
 	first = Note.first	# same as Note.all.first
 	last = Note.last	# same as Note.all.last
+	
+	first.text			# the text content of the note
 
 == Note on Patches/Pull Requests
  
