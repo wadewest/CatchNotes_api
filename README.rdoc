@@ -1,6 +1,14 @@
 = CatchNotes_api
 
-Description goes here.
+== Usage
+	class Note < CatchNotes::Base
+	  username 'foo@example.com'
+	  password 'foobar'
+	end
+	
+	notes = Note.all	# returns an array of Note objects
+	first = Note.first	# same as Note.all.first
+	last = Note.last	# same as Note.all.last
 
 == Note on Patches/Pull Requests
  
