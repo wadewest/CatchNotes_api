@@ -47,7 +47,7 @@ module CatchNotes
       module ClassMethods
         def all
           res = get "/notes"
-          if res.code == 200
+          if send(:ok?, res)
             JSON.parse(res.body)['notes'].map do |note|
               send :build_from_hash, note
             end
@@ -141,6 +141,18 @@ module CatchNotes
           input_hash.map{|k,v| [k.to_s, v]}.inject({}) do |hash, pair|
             hash[pair.first] = pair.last
             hash
+          end
+        end
+        
+        private
+        def ok?(response)
+          case response.code
+          when 200
+            true
+          when 401
+            raise CatchNotes::AuthError
+          else
+            raise CatchNotes::CatchNotesError
           end
         end
       end
