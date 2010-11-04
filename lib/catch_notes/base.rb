@@ -107,7 +107,7 @@ module CatchNotes
         end
       end
     
-      def save
+      def save!
         res = if new_record?
           self.class.send(:post, "/notes", :body => post_body)
         else
@@ -117,6 +117,10 @@ module CatchNotes
           rebuild res.parsed_response['notes'].first
         end
         true
+      end
+      
+      def save
+        save!
       rescue
         false
       end

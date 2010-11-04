@@ -60,4 +60,11 @@ class TestCatchNotes < Test::Unit::TestCase
     end
   end
   
+  should "not allow a bad user to create a note" do
+    NoteClass.bad_user
+    assert_raise CatchNotes::AuthError do
+      NoteClass.new(:text=>"Bad note").save!
+    end
+  end
+  
 end
