@@ -48,7 +48,7 @@ module CatchNotes
         def all
           res = get "/notes"
           if send(:ok?, res)
-            JSON.parse(res.body)['notes'].map do |note|
+            res.parsed_response['notes'].map do |note|
               send :build_from_hash, note
             end
           end
@@ -57,7 +57,7 @@ module CatchNotes
         def find(id)
           res = get "/notes/#{id}"
           if send(:ok?, res)
-            send :build_from_hash, JSON.parse(res.body)['notes'].first
+            send :build_from_hash, res.parsed_response['notes'].first
           end
         end
     
@@ -108,13 +108,17 @@ module CatchNotes
       end
     
       def save
-        if new_record?
-          res = self.class.send :post, "/notes", :body => post_body
-          rebuild JSON.parse(res.body)['notes'].first
-          return true
+        res = if new_record?
+          self.class.send(:post, "/notes", :body => post_body)
         else
-          false
+          self.class.send(:post, "/notes/#{self.id}", :body => post_body)
         end
+        if self.class.send(:ok?, res)
+          rebuild res.parsed_response['notes'].first
+        end
+        true
+      rescue
+        false
       end
     
       def destroy
