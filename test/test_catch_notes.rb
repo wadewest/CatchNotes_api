@@ -47,6 +47,11 @@ class TestCatchNotes < Test::Unit::TestCase
     assert note.save
   end
   
+  should "be able to delete a note" do
+    note = NoteClass.first
+    assert note.destroy
+  end
+  
   should "raise a NotFound error when a note doesn't exist" do
     assert_raise CatchNotes::NotFound do
       NoteClass.find 13
@@ -64,6 +69,14 @@ class TestCatchNotes < Test::Unit::TestCase
     NoteClass.bad_user
     assert_raise CatchNotes::AuthError do
       NoteClass.new(:text=>"Bad note").save!
+    end
+  end
+  
+  should "not allow a bad user to delete a note" do
+    note = NoteClass.first
+    NoteClass.bad_user
+    assert_raise CatchNotes::AuthError do
+      note.destroy!
     end
   end
   

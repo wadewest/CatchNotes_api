@@ -80,6 +80,12 @@ module Faker
         ]
       })
     end
+    
+    # For deleting a note
+    delete %r{/notes/(\d+)} do |id|
+      halt 404 if id.to_i == 13
+      "null"
+    end
   end
   
   Thread.new do
