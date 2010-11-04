@@ -24,15 +24,24 @@ class TestCatchNotes < Test::Unit::TestCase
   end
   
   should "be able to find a note by its id" do
-    note = NoteClass.find 432
+    note = NoteClass.find 42
     assert_instance_of NoteClass, note
   end
   
   should "be able to create and save a new note" do
-    note = NoteClass.new :text=> 'This is a new note.'
+    text = 'This is a new note.'
+    note = NoteClass.new :text=> text
     assert note.new_record?
     assert note.save
     assert !note.new_record?
+    assert_equal text, note.text
+  end
+  
+  should "not be able to access listing with bad username and password" do
+    NoteClass.bad_user
+    assert_raise CatchNotes::AuthError do
+      NoteClass.all
+    end
   end
   
 end

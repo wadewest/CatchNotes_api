@@ -7,6 +7,10 @@ module Faker
   
   class Server < Sinatra::Base
     
+    use Rack::Auth::Basic do |username, password|
+      [username, password] == ['foo@example.com', 'foobar']
+    end
+    
     helpers do
       def build_note(opts = {})
         opts = {
