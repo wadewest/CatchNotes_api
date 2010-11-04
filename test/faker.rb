@@ -54,6 +54,7 @@ module Faker
   
     # For getting a note by id
     get %r{/notes/(\d+)} do |id|
+      halt 404 if id.to_i == 13
       content_type 'application/json', :charset => 'utf-8'
       JSON.generate({
         'notes' => [build_note('id'=> id.to_i)]

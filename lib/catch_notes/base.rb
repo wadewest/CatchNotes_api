@@ -56,7 +56,7 @@ module CatchNotes
     
         def find(id)
           res = get "/notes/#{id}"
-          if res.code == 200
+          if send(:ok?, res)
             send :build_from_hash, JSON.parse(res.body)['notes'].first
           end
         end

@@ -3,6 +3,10 @@ require 'note_class'
 
 class TestCatchNotes < Test::Unit::TestCase
   
+  def setup
+    NoteClass.good_user
+  end
+  
   should "have valid login info" do
     assert_instance_of Class, NoteClass
     assert NoteClass.valid_username?, "Need a username to connect"
@@ -35,6 +39,12 @@ class TestCatchNotes < Test::Unit::TestCase
     assert note.save
     assert !note.new_record?
     assert_equal text, note.text
+  end
+  
+  should "raise a NotFound error when a note doesn't exist" do
+    assert_raise CatchNotes::NotFound do
+      NoteClass.find 13
+    end
   end
   
   should "not be able to access listing with bad username and password" do
