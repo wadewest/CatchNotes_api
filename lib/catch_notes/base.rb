@@ -147,12 +147,10 @@ module CatchNotes
         private
         def ok?(response)
           case response.code
-          when 200
-            true
-          when 401
-            raise CatchNotes::AuthError
-          else
-            raise CatchNotes::CatchNotesError
+          when 200 then true
+          when 401 then raise CatchNotes::AuthError
+          when 404 then raise CatchNotes::NotFound
+          else raise CatchNotes::CatchNotesError
           end
         end
       end

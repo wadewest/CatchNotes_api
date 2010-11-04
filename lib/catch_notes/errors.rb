@@ -7,4 +7,8 @@ module CatchNotes
   # 401 response was returned
   class AuthError < CatchNotesError
   end
+  
+  # 404 response was returned
+  class NotFound < CatchNotesError
+  end
 end
