@@ -41,6 +41,12 @@ class TestCatchNotes < Test::Unit::TestCase
     assert_equal text, note.text
   end
   
+  should "be able to update an existing note" do
+    note = NoteClass.first
+    note.text= "This is the new text"
+    assert note.save
+  end
+  
   should "raise a NotFound error when a note doesn't exist" do
     assert_raise CatchNotes::NotFound do
       NoteClass.find 13

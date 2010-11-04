@@ -69,6 +69,16 @@ module Faker
           build_note('text' => params[:text])
         ]
       })
+    end  
+    
+    # For posting updates to notes
+    post %r{/notes/(\d+)} do |id|
+      content_type 'application/json', :charset => 'utf-8'
+      JSON.generate({
+        'notes' => [
+          build_note('text' => params[:text], 'id' => params[:id].to_i)
+        ]
+      })
     end
   end
   
