@@ -125,7 +125,15 @@ module CatchNotes
         false
       end
     
+      def destroy!
+        raise CatchNotes::NotFound if new_record? # can't delete an unsaved note
+        res = self.class.send(:delete, "/notes/#{self.id}")
+        self.class.send(:ok?, res)
+      end
+    
       def destroy
+        destroy!
+      rescue
         false
       end
       

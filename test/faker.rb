@@ -84,6 +84,7 @@ module Faker
     # For deleting a note
     delete %r{/notes/(\d+)} do |id|
       halt 404 if id.to_i == 13
+      content_type 'application/json', :charset => 'utf-8'
       "null"
     end
   end
