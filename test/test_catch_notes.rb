@@ -49,7 +49,15 @@ class TestCatchNotes < Test::Unit::TestCase
   
   should "be able to delete a note" do
     note = NoteClass.first
+    assert_nothing_raised do
+      note.destroy!
+    end
     assert note.destroy
+  end
+  
+  should "not be able to delete a new note" do
+    note = NoteClass.new :text => "Hello World"
+    assert !note.destroy
   end
   
   should "raise a NotFound error when a note doesn't exist" do
