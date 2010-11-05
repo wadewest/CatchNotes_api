@@ -1,16 +1,30 @@
 = CatchNotes_api
 
 == Usage
+
+	# setting up your note class
 	class Note < CatchNotes::Base
 	  username 'foo@example.com'
 	  password 'foobar'
 	end
 	
+	# finding notes
 	notes = Note.all	# returns an array of Note objects
 	first = Note.first	# same as Note.all.first
 	last = Note.last	# same as Note.all.last
 	
 	first.text			# the text content of the note
+	
+	# creating notes
+	note = Note.new :text => "My New Note"
+	note.save 			# will return true if all is good
+	
+	# updating a note
+	note.text = "My Updated Note"
+	note.save
+	
+	# deleting a note
+	note.destroy		# will return true if all is good
 
 == Note on Patches/Pull Requests
  
