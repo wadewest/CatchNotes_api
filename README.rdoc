@@ -1,6 +1,8 @@
 = CatchNotes_api
 
 == Usage
+	# requiring
+	require 'catch_notes'
 
 	# setting up your note class
 	class Note < CatchNotes::Base
@@ -16,15 +18,15 @@
 	first.text			# the text content of the note
 	
 	# creating notes
-	note = Note.new :text => "My New Note"
-	note.save 			# will return true if all is good
+	my_note = Note.new :text => "My New Note"
+	my_note.save 			# will return true if all is good
 	
 	# updating a note
-	note.text = "My Updated Note"
-	note.save
+	my_note.text = "My Updated Note"
+	my_note.save
 	
 	# deleting a note
-	note.destroy		# will return true if all is good
+	my_note.destroy		# will return true if all is good
 
 == Note on Patches/Pull Requests
  
