@@ -28,6 +28,12 @@
 	# deleting a note
 	my_note.destroy		# will return true if all is good
 
+== Todo
+
+* Add CRUD support for image attachments.
+* Add tag searching.
+* Add tag listing.
+
 == Note on Patches/Pull Requests
  
 * Fork the project.
