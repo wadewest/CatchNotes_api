@@ -54,11 +54,17 @@ module CatchNotes
           end
         end
     
-        def find(id)
+        def find!(id)
           res = get "/notes/#{id}"
           if send(:ok?, res)
             send :build_from_hash, res.parsed_response['notes'].first
           end
+        end
+        
+        def find(id)
+          find!(id)
+        rescue CatchNotes::NotFound
+          nil
         end
     
         def first

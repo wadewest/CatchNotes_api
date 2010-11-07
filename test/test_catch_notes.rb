@@ -60,9 +60,14 @@ class TestCatchNotes < Test::Unit::TestCase
     assert !note.destroy
   end
   
-  should "raise a NotFound error when a note doesn't exist" do
+  should "raise a nil error when a note doesn't exist: find" do
+    assert_nil NoteClass.find 13
+  end
+  
+  
+  should "raise a NotFound error when a note doesn't exist: find!" do
     assert_raise CatchNotes::NotFound do
-      NoteClass.find 13
+      NoteClass.find! 13
     end
   end
   
