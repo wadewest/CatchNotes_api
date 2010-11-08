@@ -73,6 +73,15 @@ module CatchNotes
         def last
           all.last
         end
+
+        def tags
+          res = get "/tags"
+          if send(:ok?, res)
+            res.parsed_response['tags'].map do |t|
+              Tagging.new t, send(:get_auth)
+            end
+          end
+        end
       end
       
       def self.included(klass)
@@ -142,6 +151,11 @@ module CatchNotes
         false
       end
       
+      def new_record?
+        i = self.send :id
+        i.nil?
+      end
+    
       private
       def post_body
         {
@@ -152,39 +166,8 @@ module CatchNotes
       def rebuild(attrs)
         initialize(attrs)
       end
-      
-    end
 
-    module Util
-      
-      module ClassMethods
-        def stringify_keys (input_hash)
-          input_hash.map{|k,v| [k.to_s, v]}.inject({}) do |hash, pair|
-            hash[pair.first] = pair.last
-            hash
-          end
-        end
         
-        private
-        def ok?(response)
-          case response.code
-          when 200 then true
-          when 401 then raise CatchNotes::AuthError
-          when 404 then raise CatchNotes::NotFound
-          else raise CatchNotes::CatchNotesError
-          end
-        end
-      end
-      
-      def new_record?
-        i = self.send :id
-        i.nil?
-      end
-      
-      def self.included(klass)
-        klass.extend ClassMethods
-      end
-      
     end
     
     include AuthItems
