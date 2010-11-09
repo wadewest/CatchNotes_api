@@ -77,8 +77,9 @@ module CatchNotes
         def tags
           res = get "/tags"
           if send(:ok?, res)
-            res.parsed_response['tags'].map do |t|
-              Tagging.new t, send(:get_auth)
+            res.parsed_response['tags'].inject({}) do |hash, t|
+              hash[t['name']] = Tagging.new t, send(:get_auth)
+              hash
             end
           end
         end
