@@ -15,7 +15,8 @@ module Faker
       def build_note(opts = {})
         opts = {
           'id' => rand(332422),
-          'text' => "A Note for testing."
+          'text' => "A Note for testing.",
+          'tags' => []
         }.merge(opts)
         {
           "browser_url" => "https:\/\/catch.com\/m\/BPTEv\/6Jmd9SKkP0f",
@@ -23,7 +24,7 @@ module Faker
           "source"      => "Catch.com",
           "text"        => opts['text'],
           "created_at"  => "2010-11-02T15:57:46.919Z",
-          "tags"        => [],
+          "tags"        => opts['tags'],
           "modified_at" => "2010-11-03T13:47:28.674Z",
           "source_url"  => "https:\/\/catch.com\/",
           "children"    => 0,
@@ -86,6 +87,38 @@ module Faker
       halt 404 if id.to_i == 13
       content_type 'application/json', :charset => 'utf-8'
       "null"
+    end
+    
+    # For listing tags
+    get "/tags" do
+      content_type 'application/json', :charset => 'utf-8'
+      JSON.generate({
+        'tags' => [
+          { 'count' => 3,
+            'modified' => "2010-11-08T17:29:04.278Z",
+            'name' => 'blah'},
+          { 'count' => 1,
+            'modified' => "2010-11-08T17:29:04.278Z",
+            'name' => 'foo'},
+          { 'count' => 4,
+            'modified' => "2010-11-08T17:29:04.278Z",
+            'name' => 'bar'},
+        ]
+      })
+    end
+    
+    # For searching a tag
+    get '/search' do
+      content_type 'application/json', :charset => 'utf-8'
+      tag = params[:q].gsub(/^#/, '')
+      JSON.generate({
+        'notes' => [
+          build_note('text'=>'Test note one', 'tags' => [tag]),
+          build_note('text'=>'Test note two', 'tags' => [tag]),
+          build_note('text'=>'Test note three', 'tags' => [tag]),
+          build_note('text'=>'Test note four', 'tags' => [tag])
+        ]
+      })
     end
   end
   
