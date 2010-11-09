@@ -1,11 +1,10 @@
 require 'httparty'
 module CatchNotes
   class Tagging
-    include HTTParty
     
-    def initialize( attrs, auth )
+    def initialize( attrs, creator )
       @attrs = attrs
-      self.class.basic_auth auth[:username], auth[:password]
+      @creator = creator
     end
     
     def count
@@ -13,14 +12,8 @@ module CatchNotes
     end
     
     def notes
-      res = self.class.get "https://api.catch.com/v1/search?q=%23#{@attrs['name']}"
-      if self.class.send(:ok?, res)
-        res.parsed_response['notes'].map do |n|
-          Base.new(n)
-        end
-      end
+      @creator.find_all_by_tag(@attr['name'])
     end
     
-    include Util
   end
 end

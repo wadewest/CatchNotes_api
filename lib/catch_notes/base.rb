@@ -46,23 +46,38 @@ module CatchNotes
       module ClassMethods
         def all
           res = get "/notes"
-          if send(:ok?, res)
-            res.parsed_response['notes'].map do |note|
-              send :build_from_hash, note
-            end
-          end
+          build_note_array( res.parsed_response['notes'] ) if send(:ok?, res)
         end
     
         def find!(id)
           res = get "/notes/#{id}"
-          if send(:ok?, res)
-            send :build_from_hash, res.parsed_response['notes'].first
-          end
+          send(:build_from_hash,res.parsed_response['notes'].first ) if send(:ok?,res)
         end
         
         def find(id)
           find!(id)
         rescue CatchNotes::NotFound
+          nil
+        end
+
+        def find_all_by_tag!( tag_name )
+          res = get "/search?q=%23#{@attrs['name']}"
+          build_note_array( res.parsed_response['notes'] ) if send(:ok?, res)
+        end
+
+        def find_all_by_tag( tag_name )
+          find_all_by_tag( tagname )
+        rescue
+          []
+        end
+        
+        def find_by_tag!( tag_name )
+          find_all_by_tag!(tag_name).first
+        end
+        
+        def find_by_tag( tag_name )
+          find_all_by_tag!(tag_name).first
+        rescue
           nil
         end
     
@@ -78,9 +93,17 @@ module CatchNotes
           res = get "/tags"
           if send(:ok?, res)
             res.parsed_response['tags'].inject({}) do |hash, t|
-              hash[t['name']] = Tagging.new t, send(:get_auth)
+              hash[t['name']] = Tagging.new t, self
+              #hash[t['name'].to_sym] = Tagging.new t, self
               hash
             end
+          end
+        end
+        
+        private
+        def build_note_array( notes )
+          notes.map do |note|
+            send :build_from_hash, note
           end
         end
       end
