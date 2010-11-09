@@ -27,6 +27,14 @@
 	
 	# deleting a note
 	my_note.destroy		# will return true if all is good
+	
+	# listing tags
+	Note.tags
+	
+	# finding note by a tag
+	my_notes = Note.find_all_by_tag 'blah'
+	
+	my_note = Note.find_by_tag 'blah'
 
 == Todo
 
