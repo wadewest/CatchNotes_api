@@ -61,12 +61,12 @@ module CatchNotes
         end
 
         def find_all_by_tag!( tag_name )
-          res = get "/search?q=%23#{@attrs['name']}"
+          res = get "/search?q=%23#{tag_name}"
           build_note_array( res.parsed_response['notes'] ) if send(:ok?, res)
         end
 
         def find_all_by_tag( tag_name )
-          find_all_by_tag( tagname )
+          find_all_by_tag!(tag_name)
         rescue
           []
         end
