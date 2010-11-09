@@ -39,6 +39,8 @@
 == Todo
 
 * Add CRUD support for image attachments.
+* Documentation, documentation, and documentation.
+* Improve the Faker app, add a db backend with "real" fake data.
 
 == Note on Patches/Pull Requests
  
