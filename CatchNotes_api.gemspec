@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{CatchNotes_api}
-  s.version = "0.1.2"
+  s.version = "0.1.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Wade West"]
-  s.date = %q{2010-11-05}
+  s.date = %q{2010-11-08}
   s.description = %q{An ActiveResource like interface to catch.com}
   s.email = %q{wwest81@gmail.com}
   s.extra_rdoc_files = [
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     "CHANGELOG.rdoc",
      "CatchNotes_api.gemspec",
      "LICENSE",
      "README.rdoc",
@@ -27,10 +28,12 @@ Gem::Specification.new do |s|
      "lib/catch_notes.rb",
      "lib/catch_notes/base.rb",
      "lib/catch_notes/errors.rb",
+     "lib/catch_notes/tagging.rb",
      "test/faker.rb",
      "test/helper.rb",
      "test/note_class.rb",
-     "test/test_catch_notes.rb"
+     "test/test_catch_notes.rb",
+     "test/test_tagging.rb"
   ]
   s.homepage = %q{http://github.com/wadewest/CatchNotes_api}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -41,7 +44,8 @@ Gem::Specification.new do |s|
     "test/faker.rb",
      "test/helper.rb",
      "test/note_class.rb",
-     "test/test_catch_notes.rb"
+     "test/test_catch_notes.rb",
+     "test/test_tagging.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -50,7 +54,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<httparty>, [">= 0.6.1"])
-      s.add_runtime_dependency(%q<json>, [">= 1.4.6"])
+      s.add_development_dependency(%q<json>, [">= 1.4.6"])
       s.add_development_dependency(%q<thoughtbot-shoulda>, [">= 0"])
       s.add_development_dependency(%q<sinatra>, [">= 1.1.0"])
     else
