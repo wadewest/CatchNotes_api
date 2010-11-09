@@ -44,16 +44,37 @@ module CatchNotes
     # Methods for finding resources
     module FinderMethods
       module ClassMethods
+        # Returns all notes in the user's catch.com account
+        #
+        # ==== Example
+        #   MyNoteClass.all
         def all
           res = get "/notes"
           build_note_array( res.parsed_response['notes'] ) if send(:ok?, res)
         end
     
+        # Returns the note with the given +id+.  Will raise
+        # a CatchNotes::NotFound exception if the note
+        # doesn't exist.
+        #
+        # ==== Parameters
+        # * +id+ - The id of the note to find
+        #
+        # ==== Example
+        #   my_note = MyNoteClass.find!(1234)
         def find!(id)
           res = get "/notes/#{id}"
           send(:build_from_hash,res.parsed_response['notes'].first ) if send(:ok?,res)
         end
-        
+
+        # Returns the note with the given +id+.  Will return
+        # nil if the note doesn't exist.
+        #
+        # ==== Parameters
+        # * +id+ - The id of the note to find
+        #
+        # ==== Example
+        #   my_note = MyNoteClass.find(1234)        
         def find(id)
           find!(id)
         rescue CatchNotes::NotFound
