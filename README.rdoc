@@ -29,7 +29,7 @@
 	my_note.destroy		# will return true if all is good
 	
 	# listing tags
-	Note.tags
+	Note.tags 
 	
 	# finding note by a tag
 	my_notes = Note.find_all_by_tag 'blah'

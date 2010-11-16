@@ -36,7 +36,7 @@ module CatchNotes
         end
       end
       
-      def self.included(klass)
+      def self.included(klass) #:nodoc:
         klass.extend ClassMethods
       end
     end
@@ -81,11 +81,29 @@ module CatchNotes
           nil
         end
 
+        # Returns all notes that contain the given +tag_name+. Will
+        # return an empty array if nothing is found, and raises an
+        # exception if something goes wrong.
+        #
+        # ==== Parameters
+        # * +tag_name+ - Then name of the tag to search for.
+        #
+        # ==== Example
+        #   notes_about_blah = MyNoteClass.find_all_by_tag!('blah')
         def find_all_by_tag!( tag_name )
           res = get "/search?q=%23#{tag_name}"
           build_note_array( res.parsed_response['notes'] ) if send(:ok?, res)
         end
 
+        # Returns all notes that contain the given +tag_name+. Will
+        # return an empty array if nothing is found, and returns
+        # nil if something goes wrong.
+        #
+        # ==== Parameters
+        # * +tag_name+ - Then name of the tag to search for.
+        #
+        # ==== Example
+        #   notes_about_blah = MyNoteClass.find_all_by_tag('blah')
         def find_all_by_tag( tag_name )
           find_all_by_tag!(tag_name)
         rescue
@@ -129,7 +147,7 @@ module CatchNotes
         end
       end
       
-      def self.included(klass)
+      def self.included(klass) #:nodoc:
         klass.extend ClassMethods
       end
     end
@@ -143,7 +161,7 @@ module CatchNotes
         end
       end
       
-      def self.included(klass)
+      def self.included(klass) #:nodoc:
         klass.extend ClassMethods
       end
       

@@ -2,6 +2,14 @@ module CatchNotes
   module Util
     
     module ClassMethods
+      # Takes a hash and returns a new hash with all keys
+      # transformed into strings.
+      # 
+      # ==== Parameters
+      # * +input_hash+ - The hash to stringify
+      #
+      # ==== Example
+      #   stringify_keys( :hello => "world", 1 => 2) # => {'hello' => 'world', '1' => 2}
       def stringify_keys (input_hash)
         input_hash.map{|k,v| [k.to_s, v]}.inject({}) do |hash, pair|
           hash[pair.first] = pair.last
@@ -20,7 +28,7 @@ module CatchNotes
       end
     end
     
-    def self.included(klass)
+    def self.included(klass) #:nodoc:
       klass.extend ClassMethods
     end
     
