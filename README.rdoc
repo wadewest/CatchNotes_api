@@ -36,11 +36,7 @@
 	
 	my_note = Note.find_by_tag 'blah'
 
-== Todo
-
-* Add CRUD support for image attachments.
-* Documentation, documentation, and documentation.
-* Improve the Faker app, add a db backend with "real" fake data.
+== {Todo List}[http://catch-blog.heroku.com/article/20888435]
 
 == Note on Patches/Pull Requests
  
