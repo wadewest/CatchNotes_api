@@ -35,6 +35,9 @@ module CatchNotes
   end
 end
 
+Dir["#{File.dirname(__FILE__)}/catch_notes/module/*.rb"].each do |lib|
+  require lib
+end
 require 'catch_notes/errors'
 require 'catch_notes/base'
 require 'catch_notes/tagging'
