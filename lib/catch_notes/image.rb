@@ -1,6 +1,8 @@
 module CatchNotes
   class Image
     
+    attr_accessor :url, :data
+    
     def initialize(opts)
       @attr = opts
       @url = nil
@@ -14,16 +16,12 @@ module CatchNotes
       end
     end
     
-    def url
-      @url
-    end
-    
     def url=(new_url)
       @data = nil
       @url = new_url
     end
     
-    def data
+    def data #:nodoc:
       if @data.nil? && !@url.nil?
         res = HTTParty.get @url
         if res.code == 200
@@ -51,6 +49,7 @@ module CatchNotes
     
     private
     def init_from_file
+      @data = File.read(@attr[:file])
     end
     
     def init_from_url
@@ -58,6 +57,7 @@ module CatchNotes
     end
     
     def init_from_data
+      @data = @attr[:data]
     end
     
   end
