@@ -9,43 +9,46 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Wade West"]
-  s.date = %q{2010-11-08}
+  s.date = %q{2010-11-16}
   s.description = %q{An ActiveResource like interface to catch.com}
   s.email = %q{wwest81@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
-     "README.rdoc"
+    "README.rdoc"
   ]
   s.files = [
     ".document",
-     ".gitignore",
-     "CHANGELOG.rdoc",
-     "CatchNotes_api.gemspec",
-     "LICENSE",
-     "README.rdoc",
-     "Rakefile",
-     "VERSION",
-     "lib/catch_notes.rb",
-     "lib/catch_notes/base.rb",
-     "lib/catch_notes/errors.rb",
-     "lib/catch_notes/tagging.rb",
-     "test/faker.rb",
-     "test/helper.rb",
-     "test/note_class.rb",
-     "test/test_catch_notes.rb",
-     "test/test_tagging.rb"
+    "CHANGELOG.rdoc",
+    "CatchNotes_api.gemspec",
+    "LICENSE",
+    "README.rdoc",
+    "Rakefile",
+    "VERSION",
+    "lib/catch_notes.rb",
+    "lib/catch_notes/base.rb",
+    "lib/catch_notes/errors.rb",
+    "lib/catch_notes/image.rb",
+    "lib/catch_notes/module/auth_items.rb",
+    "lib/catch_notes/module/crud_methods.rb",
+    "lib/catch_notes/module/finder_methods.rb",
+    "lib/catch_notes/module/image_support.rb",
+    "lib/catch_notes/tagging.rb",
+    "test/faker.rb",
+    "test/helper.rb",
+    "test/note_class.rb",
+    "test/test_catch_notes.rb",
+    "test/test_tagging.rb"
   ]
   s.homepage = %q{http://github.com/wadewest/CatchNotes_api}
-  s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{An ActiveResource like interface to catch.com}
   s.test_files = [
     "test/faker.rb",
-     "test/helper.rb",
-     "test/note_class.rb",
-     "test/test_catch_notes.rb",
-     "test/test_tagging.rb"
+    "test/helper.rb",
+    "test/note_class.rb",
+    "test/test_catch_notes.rb",
+    "test/test_tagging.rb"
   ]
 
   if s.respond_to? :specification_version then
