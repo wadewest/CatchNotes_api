@@ -3,7 +3,7 @@ module CatchNotes
     
     attr_accessor :url, :data
     
-    def initialize(opts)
+    def initialize(opts = {})
       @attr = opts
       @url = nil
       @data = nil
