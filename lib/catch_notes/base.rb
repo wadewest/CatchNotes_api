@@ -13,6 +13,7 @@ module CatchNotes
     include AuthItems
     include FinderMethods
     include CRUDMethods
+    include ImageSupport
     include Util
     
   end
