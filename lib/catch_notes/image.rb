@@ -32,11 +32,11 @@ module CatchNotes
     # Returns the raw data of the image.  If there is no data, it will be generated from the image at +url+ if it is set.
     def data
       if @data.nil? && !@url.nil?
-        res = HTTParty.get @url
+        res = HTTParty.get(@url)
         if res.code == 200
           @data = res.body
         else
-          raise
+          raise "Couldn't get #{@url} -- #{res.code}"
         end
       end
       @data

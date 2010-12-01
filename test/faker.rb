@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'sinatra/base'
 require 'json'
 module Faker
@@ -7,16 +8,25 @@ module Faker
   
   class Server < Sinatra::Base
     
-    use Rack::Auth::Basic do |username, password|
-      [username, password] == ['foo@example.com', 'foobar']
-    end
-    
     helpers do
+      def protected!
+        unless authorized?
+          response['WWW-Authenticate'] = %(Basic realm="HTTP Auth")
+          throw(:halt, [401, "Not authorized\n"])
+        end
+      end
+
+      def authorized?
+        @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+        @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ['foo@example.com', 'foobar']
+      end
+      
       def build_note(opts = {})
         opts = {
           'id' => rand(332422),
           'text' => "A Note for testing.",
-          'tags' => []
+          'tags' => [],
+          'media' => []
         }.merge(opts)
         {
           "browser_url" => "https:\/\/catch.com\/m\/BPTEv\/6Jmd9SKkP0f",
@@ -27,6 +37,7 @@ module Faker
           "tags"        => opts['tags'],
           "modified_at" => "2010-11-03T13:47:28.674Z",
           "source_url"  => "https:\/\/catch.com\/",
+          "media"       => opts['media'],
           "children"    => 0,
           "reminder_at" => nil,
           "location"    => nil,
@@ -38,6 +49,11 @@ module Faker
                           }
         }
       end
+    end
+    
+    PUBLIC_PATHS = []
+    before do
+      protected! unless PUBLIC_PATHS.include? request.path_info
     end
     
     # For getting all notes
@@ -111,14 +127,25 @@ module Faker
     get '/search' do
       content_type 'application/json', :charset => 'utf-8'
       tag = params[:q].gsub(/^#/, '')
+      media = {}
+      if tag == 'image'
+        media = {'media' => [{'src' => "http://#{HOST}:#{PORT}/catch_image.png"}]}
+      end
       JSON.generate({
         'notes' => [
-          build_note('text'=>'Test note one', 'tags' => [tag]),
-          build_note('text'=>'Test note two', 'tags' => [tag]),
-          build_note('text'=>'Test note three', 'tags' => [tag]),
-          build_note('text'=>'Test note four', 'tags' => [tag])
+          build_note({'text'=>'Test note one', 'tags' => [tag]}.merge(media)),
+          build_note({'text'=>'Test note one', 'tags' => [tag]}.merge(media)),
+          build_note({'text'=>'Test note one', 'tags' => [tag]}.merge(media)),
+          build_note({'text'=>'Test note one', 'tags' => [tag]}.merge(media))
         ]
       })
+    end
+    
+    # Image attachments
+    PUBLIC_PATHS.push('/catch_image.png')
+    get '/catch_image.png' do
+      content_type 'image/png'
+      send_file(File.join(File.dirname(__FILE__), 'catch_logo.png'))
     end
   end
   
