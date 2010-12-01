@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{CatchNotes_api}
-  s.version = "0.1.3"
+  s.version = "0.1.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Wade West"]
-  s.date = %q{2010-11-16}
+  s.date = %q{2010-12-01}
   s.description = %q{An ActiveResource like interface to catch.com}
   s.email = %q{wwest81@gmail.com}
   s.extra_rdoc_files = [
@@ -33,10 +33,12 @@ Gem::Specification.new do |s|
     "lib/catch_notes/module/finder_methods.rb",
     "lib/catch_notes/module/image_support.rb",
     "lib/catch_notes/tagging.rb",
+    "test/catch_logo.png",
     "test/faker.rb",
     "test/helper.rb",
     "test/note_class.rb",
     "test/test_catch_notes.rb",
+    "test/test_image.rb",
     "test/test_tagging.rb"
   ]
   s.homepage = %q{http://github.com/wadewest/CatchNotes_api}
@@ -48,6 +50,7 @@ Gem::Specification.new do |s|
     "test/helper.rb",
     "test/note_class.rb",
     "test/test_catch_notes.rb",
+    "test/test_image.rb",
     "test/test_tagging.rb"
   ]
 
