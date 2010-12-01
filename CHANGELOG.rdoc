@@ -1,5 +1,5 @@
 == v0.1.4
-* Added added read support for attached images.
+* Added read support for attached images.
 == v0.1.3
 * Added tag listing support.
 * Added searching by tag.
