@@ -1,5 +1,8 @@
 = CatchNotes_api
 
+== Project is Closed
+  Catch.com has closed down as of the end of August 2013.  For this reason CatchNotes_api is now considered abandoned.
+
 == Usage
 	# requiring
 	require 'catch_notes'
